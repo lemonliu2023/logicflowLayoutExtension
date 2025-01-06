@@ -86,7 +86,7 @@ export default function App() {
 
   return (
     <>
-      <Button onClick={() => lfRef.current.extension.Layout.layout()}>自动布局</Button>
+      <Button onClick={() => (lfRef.current.extension.Layout as unknown as Layout).layout()}>自动布局</Button>
       <div className="App" ref={refContainer}></div>
     </>
   );
