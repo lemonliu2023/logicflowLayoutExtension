@@ -28,20 +28,31 @@ export class Layout {
     return totalLength;
   }
   async layout(options: AntVDagreLayoutOptions = {}) {
+    const { nodes, edges, gridSize } = this.lf.graphModel;
+    let nodesep = 40;
+    let ranksep = 40;
+    if (gridSize > 20) {
+      nodesep = gridSize * 2;
+      ranksep = gridSize * 2;
+    }
     const initOptions = {
       nodeSize: 100,
       begin: [100, 100],
       align: 'DR',
       radial: true,
       rankdir: 'LR',
+      nodesep,
+      ranksep
     };
     this.options = Object.assign(initOptions, options);
-    const { nodes, edges } = this.lf.graphModel;
     const layoutInstance = new AntVDagreLayout(this.options);
     const graph = new Graph({
       nodes: nodes.map((node) => ({
         id: node.id,
-        data: {},
+        data: {
+          width: node.width,
+          height: node.height,
+        },
       })),
       edges: edges.map((edge) => ({
         id: edge.id,
